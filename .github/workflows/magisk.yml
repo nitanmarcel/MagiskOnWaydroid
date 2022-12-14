@@ -301,7 +301,7 @@ jobs:
           7z x vendor.zip -o${{ matrix.arch }}/
       - name: Resize system image
         run: |
-          e2fsck -y -f /var/lib/waydroid/images/system.img
+          e2fsck -y -f ${{ matrix.arch }}/system.img
           resize2fs ${{ matrix.arch }}/system.img 6G
       - name: Extract GApps and expand images
         if: ${{ matrix.gapps_variant != 'none' && matrix.gapps_variant != '' }}
