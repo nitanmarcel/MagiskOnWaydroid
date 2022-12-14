@@ -14,7 +14,7 @@ on:
         default: "x64"
         type: choice
         options:
-        - x64
+        - x64_64
       and_ver:
         description: "Android Version"
         required: true
@@ -295,8 +295,10 @@ jobs:
       - name: Replace system and vendor
         run: |
           rm -rf ${{ matrix.arch }}/{system,vendor}.img
-          wget -q https://sourceforge.net/projects/blissos-dev/files/waydroid/lineage/lineage-18.1/Lineage-OS-18.1-waydroid_x86_64-202111291420-foss-sd-hd-ex_ax86-vaapi_gles-aep.zip/download -O los.zip
-          7z x los.zip -o${{ matrix.arch }}/
+          wget -q https://sourceforge.net/projects/waydroid/files/images/system/lineage/waydroid_x86_64/lineage-18.1-20221210-VANILLA-waydroid_x86_64-system.zip/download -O system.zip
+          wget -q https://sourceforge.net/projects/waydroid/files/images/vendor/waydroid_x86_64/lineage-18.1-20221207-MAINLINE-waydroid_x86_64-vendor.zip/download -O vendor.zip
+          7z x system.zip -o${{ matrix.arch }}/
+          7z x vendor.zip -o${{ matrix.arch }}/
       - name: Extract GApps and expand images
         if: ${{ matrix.gapps_variant != 'none' && matrix.gapps_variant != '' }}
         run: |
