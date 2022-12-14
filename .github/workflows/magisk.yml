@@ -299,6 +299,10 @@ jobs:
           wget -q https://sourceforge.net/projects/waydroid/files/images/vendor/waydroid_x86_64/lineage-18.1-20221207-MAINLINE-waydroid_x86_64-vendor.zip/download -O vendor.zip
           7z x system.zip -o${{ matrix.arch }}/
           7z x vendor.zip -o${{ matrix.arch }}/
+      - name: Resize system image
+        run: |
+          e2fsck -y -f /var/lib/waydroid/images/system.img
+          resize2fs ${{ matrix.arch }}/system.img 6G
       - name: Extract GApps and expand images
         if: ${{ matrix.gapps_variant != 'none' && matrix.gapps_variant != '' }}
         run: |
